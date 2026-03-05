@@ -39,3 +39,6 @@ print(res.keys())
 ```
 
 For complete workflow (batch processing, pickle aggregation, CFM analysis), see [MANUAL.md](MANUAL.md).
+
+## Contributors
+This package was developed by **Kai Liu (IMDEA)** and **Spearot Douglas (University of Florida)** under the supervision of **[Damien Tourret (IMDEA)](https://materiales.imdea.org/people/damien-tourret/)**. We also acknowledge the contributions of **Qian W**.
