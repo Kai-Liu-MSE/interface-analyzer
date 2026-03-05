@@ -4,8 +4,8 @@ Tools for solid-liquid interface detection in Molecular Dynamics (MD) simulation
 
 ## Full Manual
 
-- Chinese manual: [MANUAL.md](MANUAL.md)
 - English manual: [MANUAL_EN.md](MANUAL_EN.md)
+- Chinese manual: [MANUAL.md](MANUAL.md)
 
 ## Features
 
