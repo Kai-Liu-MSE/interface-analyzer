@@ -6,6 +6,7 @@ Tools for solid-liquid interface detection in Molecular Dynamics (MD) simulation
 
 - English manual: [MANUAL_EN.md](MANUAL_EN.md)
 - Chinese manual: [MANUAL.md](MANUAL.md)
+- Reproducibility assets: [interface_analyzer/reproducibility](interface_analyzer/reproducibility)
 
 ## Features
 
@@ -39,6 +40,8 @@ print(res.keys())
 ```
 
 For complete workflow (batch processing, pickle aggregation, CFM analysis), see [MANUAL.md](MANUAL.md).
+
+For manuscript reproduction examples, including LAMMPS inputs, CFG post-processing scripts, and Jupyter notebooks for stiffness, relaxation-time, convergence, and anisotropy analysis, see `interface_analyzer/reproducibility/`.
 
 ## Contributors
 This package was developed by **Kai Liu (IMDEA)** and **Spearot Douglas (University of Florida)** under the supervision of **[Damien Tourret (IMDEA)](https://materiales.imdea.org/people/damien-tourret/)**. We also acknowledge the contributions of **Qian W**.

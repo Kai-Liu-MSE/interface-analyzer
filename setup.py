@@ -9,6 +9,7 @@ setup(
     author='KaiLiu',
     url='http://yourrepository.com',
     packages=find_packages(), # Automatically finds the interface_analyzer folder
+    include_package_data=True,
     install_requires=[
         'numpy>=1.20',
         'scipy>=1.7',

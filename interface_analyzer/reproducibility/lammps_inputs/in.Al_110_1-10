@@ -1,0 +1,139 @@
+log             log.Al_110_1-10
+
+# This file was originally written by user "qianw" at IMDEA
+# Provided to Spearot by Damien Tourret 9/8/2022
+# Notes on file and updates performed by Spearot starting 10/20/2022
+# Decrease timestep and change "neighbor" settings to avoid energy leakage during NVE
+
+#Simultion setup
+dimension	3
+boundary	p p p
+units		metal
+atom_style	atomic
+
+#Directories for output files
+shell		mkdir ./Equilfiles	#Creates directory for equilibration files
+shell		mkdir ./CFGfiles	#Creates directory for production files
+
+#Material propeties and simulation variables
+variable	Tm equal 927		#Melting temperature
+variable	Tmax equal ${Tm}+500		#Maximum temperature well above T_melt
+variable	a equal 4.0452		#Lattice parameter
+variable	dx equal $a*sqrt(1*1+0*0+1*1)	#Repeat distance in X direction
+variable        dy equal $a*sqrt(1*1+0*0+0*0)	#Repeat distance in Y direction
+variable        dz equal $a*sqrt(1*1+1*1+0*0)	#Repeat distance in Z direction
+variable	nx equal 100			#Number of repeat units in X direction
+variable	ny equal 3			#Number of repeat units in Y direction
+variable	nz equal 30			#Number of repeat units in Z direction
+variable	Lx equal ${nx}*${dx}		#Length of box in X direction Angstroms
+variable        Ly equal ${ny}*${dy}       	#Length of box in Y direction Angstroms
+variable        Lz equal ${nz}*${dz}       	#Length of box in Z direction Angstroms
+variable	Lz1 equal lz*0.25		#Bottom 25% of the height of the model
+variable	Lz2 equal lz*0.75    		#Top 25% of the height of the model
+variable	buf equal 0.001			#Buffer for LAMMPS construction
+
+variable	Lx_	equal	${Lx}-${buf}
+variable	Ly_	equal	${Ly}-${buf}
+variable	Lz_	equal	${Lz}-${buf}
+
+#Create simulation cell and atoms
+lattice		fcc $a orient x 1 1 0 orient y 0 0 1 orient z 1 -1 0
+region		BOX block -${buf} ${Lx_} -${buf} ${Ly_} -${buf} ${Lz_} units box
+create_box	2 BOX
+create_atoms	1 region BOX
+
+#Define interatomic potential
+pair_style      aeam
+pair_coeff      * * ../AlSi.aeam Al Si
+
+mass            1 26.9815385
+mass            2 28.0855
+
+neighbor 1.0 bin
+neigh_modify delay 0 every 1 check yes
+
+#Define thermodynamic output to log file
+thermo_style	custom step temp etotal press pxx pyy pzz vol lx ly lz
+thermo_modify	lost warn flush yes
+thermo		1000
+
+
+#Timestep for integration
+timestep	0.001
+
+
+reset_timestep 0
+##Barostat-Thermostat/ Equilibration
+fix 		1 all nve
+fix		2 all press/berendsen x 0.0 0.0 1000.0 y 0.0 0.0 1000.0 z 0.0 0.0 1000.0
+run		10000
+
+unfix		1
+
+velocity	all create 100.0 421442 dist gaussian
+fix		3 all langevin 100 ${Tm} 2.0 4163
+fix		1 all nve
+run		25000
+
+unfix		1
+unfix		3
+
+fix		3 all langevin ${Tm} ${Tm} 2.0 11375
+fix		1 all nve
+run		25000
+
+unfix		1
+unfix		3
+
+#Define liquid and solid regions for separate thermostating
+region		solid1 block INF INF INF INF INF ${Lz1} units box	#Defines a lower solid region
+region		solid2 block INF INF INF INF ${Lz2} INF units box	#Defines an upper solid region
+region		liquid  block INF INF INF INF ${Lz1} ${Lz2} units box	#Defies the center liquid region
+group		solid region solid1
+group		solid region solid2
+group		liquid region liquid
+
+#Ramp liquid to high temperature while holding solid at T_melt
+fix		freeze solid setforce 0.0 0.0 0.0
+velocity	solid	set 0.0 0.0 0.0
+
+fix		3 liquid langevin ${Tm} ${Tmax} 2.0 1236
+fix		1 liquid nve
+
+
+#Define thermodynamic output to log file
+thermo_style    custom step temp etotal press pxx pyy pzz vol lx ly lz
+thermo_modify   lost warn flush yes
+thermo          1000
+
+run		100000
+
+unfix		1
+unfix		3
+fix		3 liquid langevin ${Tmax} ${Tm} 2.0 4836
+fix		1 liquid nve
+run		100000
+
+unfix		1
+unfix		2
+unfix		3
+unfix		freeze
+
+
+fix 1 all npt temp ${Tm} ${Tm} 0.1 x 0.0 0.0 5.0 y 0.0 0.0 5.0 z 0.0 0.0 5.0 couple none
+
+run	50000
+
+unfix	1
+reset_timestep	0
+
+fix	1 all nph z 0.0 0.0 10.0 couple none drag 0.2
+fix 	2 all momentum 1000 linear 1 1 1
+
+run	1000000
+
+dump		id all custom 500 CFGfiles/cfg.Al_110_1-10.* id type x y z
+
+run 5000000
+unfix 1
+write_restart final.restart

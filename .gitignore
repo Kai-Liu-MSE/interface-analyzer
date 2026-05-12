@@ -1,0 +1,4 @@
+__pycache__/
+.ipynb_checkpoints/
+interface_analyzer/reproducibility/_local_outputs/
+*.py[cod]
