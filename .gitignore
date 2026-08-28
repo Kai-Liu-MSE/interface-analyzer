@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+/.waylog/
+reproducibility/_local_outputs/
+
+# Local validation material retained outside the public v2 release tree.
+/results/
+/scripts/
+/hpc/
+/VALIDATION_RECORD_CN.md

@@ -1,0 +1,53 @@
+{
+  "reference_platform": "interface-analyzer v0.2.0.dev0; OVITO 3.14.1; 20 immutable legacy 100[010] frames",
+  "comparison_tolerance": {
+    "rtol": 1e-6,
+    "atol": 1e-5
+  },
+  "exact": {
+    "dataset": "100_010_20frames",
+    "n_frames": 20,
+    "steps": [
+      1000000,
+      1000500,
+      1001000,
+      1001500,
+      1002000,
+      1002500,
+      1003000,
+      1003500,
+      1004000,
+      1004500,
+      1005000,
+      1005500,
+      1006000,
+      1006500,
+      1007000,
+      1007500,
+      1008000,
+      1008500,
+      1009000,
+      1009500
+    ],
+    "interface.grid_shape_zx": [71, 233],
+    "interface.height_shape_x": [233],
+    "native_grid_cfm_smoke.temperature_K": 927.0,
+    "native_grid_cfm_smoke.n_independent_modes": 116,
+    "native_grid_cfm_smoke.ky0_fit.model": "ky0",
+    "native_grid_cfm_smoke.ky0_fit.status": "ok",
+    "native_grid_cfm_smoke.ky0_fit.rank": 1,
+    "native_grid_cfm_smoke.ky0_fit.n_modes": 10
+  },
+  "floating_point": {
+    "interface.first_h_lower_mean_A": 48.89544859464588,
+    "interface.first_h_upper_mean_A": 127.23069520876643,
+    "interface.last_h_lower_mean_A": 49.15737268341457,
+    "interface.last_h_upper_mean_A": 127.47206436615645,
+    "interface.trajectory_h_lower_mean_A": 49.127414998885385,
+    "interface.trajectory_h_upper_mean_A": 127.17673335259565,
+    "native_grid_cfm_smoke.projection_identity_max_abs_difference_A": 0.0,
+    "native_grid_cfm_smoke.ky0_fit.gamma_xx_mJ_m2": 97.56785757201776,
+    "native_grid_cfm_smoke.ky0_fit.r2": -0.06682421003689254,
+    "native_grid_cfm_smoke.ky0_fit.rmse": 0.6640303124100111
+  }
+}

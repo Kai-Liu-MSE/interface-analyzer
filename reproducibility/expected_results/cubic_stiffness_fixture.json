@@ -1,0 +1,13 @@
+{
+  "description": "Known answer for the synthetic replica-resolved cubic stiffness fixture.",
+  "fixture": "../data/cubic_stiffness_replicas.csv",
+  "pooled": {
+    "gamma0_mJ_m2": 103.0,
+    "gamma0_epsilon1_mJ_m2": 5.0,
+    "gamma0_epsilon2_mJ_m2": -0.28,
+    "epsilon1": 0.04854368932038835,
+    "epsilon2": -0.002718446601941748,
+    "minus_epsilon2": 0.002718446601941748
+  },
+  "replica_uncertainty_policy": "The 27 cross-orientation combinations and bootstrap both resample complete MD replicas, never Fourier modes."
+}
