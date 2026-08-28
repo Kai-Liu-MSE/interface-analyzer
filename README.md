@@ -45,20 +45,20 @@ fluctuation.
 
 For every physical mode on the saved uniform grid, v2 forms the CFM response
 
-\[
+$$
   \frac{k_B T}{A\langle |h(\mathbf{k})|^2\rangle},
-\]
+$$
 
 and fits it through the origin to the appropriate quadratic form in
-\(\mathbf{k}\). Here \(A\) is the interfacial area and the average includes
+$\mathbf{k}$. Here $A$ is the interfacial area and the average includes
 the two interfaces and all selected frames. The result is a *stiffness*, not
 automatically an interfacial free energy. The two coincide only under the
 relevant isotropic limiting assumptions.
 
 This distinction matters for anisotropic interfaces. A stiffness measured in
 one in-plane direction is one observable; it cannot by itself determine the
-three conventional cubic parameters \(\gamma_0\), \(\epsilon_1\), and
-\(\epsilon_2\). v2 therefore keeps the directional stiffnesses explicit and
+three conventional cubic parameters $\gamma_0$, $\epsilon_1$, and
+$\epsilon_2$. v2 therefore keeps the directional stiffnesses explicit and
 uses three primary directions—`100_010`, `110_001`, and `110_1m10`—for the
 cubic fit.
 
